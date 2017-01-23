@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Should, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Should.1.1.20\lib\Should.dll</HintPath>
       <Private>True</Private>
@@ -61,6 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\Antipatterns\Chain Gang\When_Performing_Banking_Transactions.cs" />
+    <Compile Include="Test\Antipatterns\FreeRide\When_Borrowing_Book.cs" />
+    <Compile Include="Test\Antipatterns\Liar\When_Adding_Two_Numbers.cs" />
+    <Compile Include="Test\Antipatterns\LocalHero\When_Presenting_Application_Name.cs" />
+    <Compile Include="Test\Antipatterns\Mockery\When_Doing_Something_With_Lots_Of_Dependencies.cs" />
+    <Compile Include="Test\Antipatterns\SecondClass\When_Adding_Two_Numbers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -68,7 +78,6 @@
   <ItemGroup>
     <Folder Include="Application\" />
     <Folder Include="Specification\" />
-    <Folder Include="Test\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
