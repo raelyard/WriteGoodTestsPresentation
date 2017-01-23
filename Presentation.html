@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Getting Involved | Dave Rael</title>
+    <title>Write Good Tests | Dave Rael</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -33,7 +33,245 @@ dave@raelyard.com
 https://github.com/raelyard/WriteGoodTestsPresentation
 
 ---
-# Hello World
+# What are good tests?
+![question](question.jpg)
+
+---
+# Why do we want to test well?
+![question](why.png)
+
+---
+# Why do we want to test?
+![question](question.jpg)
+
+---
+# Why do we want to test?
+
+- How do you know it works?
+- You're going to test anyway
+- Manual testing is costly
+- Manual testing is especially costly with ASP.NET (not Core)
+- Manual testing is boring (and therefore hard to do thoroughly and completely on a consistent basis)
+- Don't be a "professional debuggerer" (don't be slow)
+- Confidence
+
+---
+# Why do we want to test?
+
+- How do you know it works?
+- You're going to test anyway
+- Manual testing is costly
+- Manual testing is especially costly with ASP.NET (not Core)
+- Manual testing is boring (and therefore hard to do thoroughly and completely on a consistent basis)
+- **Don't be a "professional debuggerer" (don't be slow)**
+- **Confidence**
+
+---
+# Why do we want to test well?
+![question](why.png)
+
+---
+# Why do we want to test well?
+- "How you do anything is how you do everything"
+  - Martha Beck
+
+![anything-everything](anything-everything.jpg)
+
+---
+# Why do we want to test well?
+- Testing Poorly == Pain
+
+![pain](pain.jpg)
+
+---
+# What are good tests?
+![good](good.jpg)
+
+---
+# What are good tests?
+
+- Tests that aren't bad
+
+---
+# What are good tests?
+
+- Tests that aren't bad
+- Tests that express intent
+- Documentation of intent
+- Tests that have only one way to fail
+- Tests that are independent and autonomous
+- Tests that actually test something
+- Tests that are easy to read
+- Tests that are easy to maintain
+- Tests that are fast (enough)
+- Tests that do not have (too many) dependencies
+
+---
+# What are bad tests?
+![bad](bad.jpg)
+
+---
+# What are bad tests?
+
+- Tests that aren't good
+
+---
+# What are bad tests?
+
+- Antipatterns
+  - Second Class Citizens
+  - The Free Ride/Piggyback
+  - Happy Path
+  - The Liar
+  - The Local Hero
+  - Chain Gang
+  - The Mockery
+
+---
+# Second Class Citizens
+
+```C#
+public class When_Adding_Two_Numbers
+{
+    [Fact]
+    public void Should_Result_Four()
+    {
+        Add(2, 2).ShouldEqual(4);
+    }
+
+    [Fact]
+    public void Should_Result_Five()
+    {
+        Add(2, 3).ShouldEqual(5);
+    }
+
+    [Fact]
+    public void Should_Result_Six()
+    {
+        Add(3, 3).ShouldEqual(6);
+    }
+}
+```
+
+---
+# The Free Ride/Piggyback
+
+```C#
+public class When_Borrowing_Book
+{
+  [Fact]
+  public void Should_Have_New_Loan()
+  {
+      var loan = BorrowBook(666);
+
+      loan.Book.Title.ShouldEqual(
+        "Harry Potter and Goblet of Fire",
+        "Did not get the expected book title checked out.");
+      loan.DueDate.ShouldEqual(
+        DateTime.Parse("2017-03-01",
+        "Did not get the expected due date on the loan."));
+  }
+}
+```
+
+---
+# Happy Path
+
+![happy](happy.jpg)
+
+---
+# The Liar
+
+```C#
+public class When_Adding_Two_Numbers
+{
+    [Fact]
+    public void Should_Result_Five()
+    {
+        Add(2, 2).ShouldEqual(5);
+    }
+}
+```
+
+---
+# The Local Hero
+```C#
+public class When_Presenting_Application_Name
+{
+    [Fact]
+    public void Should_IncorporateMachineName()
+    {
+        new Application().Name.ShouldEqual(
+          $"Super Awesome App On {System.Environment.MachineName}",
+          "Presented the wrong application name");
+    }
+}
+```
+
+---
+# Chain Gang
+
+```C#
+public class When_Performing_Banking_Transactions
+{
+    private readonly BankAccount _bankAccount;
+
+    public When_Performing_Banking_Transactions()
+    {
+        _bankAccount = new BankAccount(100);
+    }
+
+    [Fact]
+    public void Deposit_Should_Increase_Balance()
+    {
+        _bankAccount.Deposit(20);
+        _bankAccount.Balance.ShouldEqual(120);
+    }
+
+    [Fact]
+    public void Withdrawal_Should_Decrease_Balance()
+    {
+        _bankAccount.Withdraw(20);
+        _bankAccount.Balance.ShouldEqual(100);
+    }
+}
+```
+
+---
+# The Mockery
+
+```C#
+public class When_Doing_Something_With_Lots_Of_Dependencies
+{
+    [Fact]
+    public void Should_Do_Something_Useful_After_Setting_Up_Dependencies()
+    {
+        // Heavy setup burden:
+        var mockDependency0 = MockRepository.GenerateStub<IDependency0>();
+        var mockDependency1 = MockRepository.GenerateStub<IDependency1>();
+        var mockDependency2 = MockRepository.GenerateStub<IDependency2>();
+
+        var instanceUnderTest =
+          new ClassUnderTest(mockDependency0, mockDependency1, mockDependency2);
+
+        // TODO: create a more useful assert:
+        instanceUnderTest.UsefulFunctionality().ShouldEqual(0);
+    }
+}
+```
+
+---
+# Smells:
+
+- Tests that Can't Fail
+- Multple Asserts
+- Inordinate Setup
+- Trivia
+
+---
+# Enough Bad Tests:
+
+### Let's write some good ones.
 
 ---
 class: center, middle
